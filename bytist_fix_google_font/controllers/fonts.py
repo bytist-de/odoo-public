@@ -40,5 +40,5 @@ class FixBinary(Binary):
     @http.route(['/css/font/gstatic/<string:pre>/<string:family>/<string:version>/<string:font>/'], type='http', auth="public")
     def load_gstatic(self, pre, family, version, font, **kw):
         res = requests.get("https://fonts.gstatic.com/%s/%s/%s/%s" % (pre, family, version, font), params=kw)
-        return http.Response(res.content, res.status_code, headers=dict(res.headers))
+        return http.Response(res.content, res.status_code, mimetype='font/ttf')
 
