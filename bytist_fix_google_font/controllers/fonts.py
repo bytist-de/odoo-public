@@ -16,16 +16,18 @@ class FixBinary(Binary):
         '/web/content/<string:model>/<int:id>/<string:field>',
         '/web/content/<string:model>/<int:id>/<string:field>/<string:filename>'], type='http', auth="public")
     def content_common(self, xmlid=None, model='ir.attachment', id=None, field='datas',
-                       filename=None, filename_field='name', unique=None, mimetype=None,
-                       download=None, data=None, token=None, access_token=None, **kw):
+                       filename=None, filename_field='datas_fname', unique=None, mimetype=None,
+                       download=None, data=None, token=None, access_token=None, related_id=None, access_mode=None,
+                       **kw):
 
         # Intercept response
         response = super(FixBinary,self).content_common(xmlid, model, id, field,
                        filename, filename_field, unique, mimetype,
-                       download, data, token, access_token, **kw)
+                       download, data, token, access_token, related_id, access_mode,
+                       **kw)
 
         # Fix google api calls
-        if filename == 'web.assets_frontend.css':
+        if filename.startswith('web.assets_frontend'):
             response.data = response.data.decode(response.charset).replace("https://fonts.googleapis.com/css", "/css/font/google").encode(response.charset)
 
         return response
