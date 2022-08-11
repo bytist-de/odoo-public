@@ -27,7 +27,7 @@ class FixBinary(Binary):
                        **kw)
 
         # Fix google api calls
-        if filename.startswith('web.assets_frontend'):
+        if filename and filename.startswith('web.assets_frontend'):
             response.data = response.data.decode(response.charset).replace("https://fonts.googleapis.com/css", "/css/font/google").encode(response.charset)
 
         return response
