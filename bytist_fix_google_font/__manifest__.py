@@ -9,5 +9,7 @@
     'depends': ['website'],
     'license': 'OPL-1',
     'support': 'info@bytist.de',
-    'data': []
+    'data': [
+        'views/website_templates.xml'
+    ]
 }
