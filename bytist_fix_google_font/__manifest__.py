@@ -11,5 +11,8 @@
     'support': 'info@bytist.de',
     'data': [
         'views/website_templates.xml'
+    ],
+    'images': [
+        'static/description/banner.png'
     ]
 }
