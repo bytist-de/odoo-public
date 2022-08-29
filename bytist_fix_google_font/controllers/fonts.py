@@ -5,27 +5,18 @@ from odoo import http
 
 class FixBinary(Binary):
 
-    @http.route(['/web/content',
-        '/web/content/<string:xmlid>',
-        '/web/content/<string:xmlid>/<string:filename>',
-        '/web/content/<int:id>',
-        '/web/content/<int:id>/<string:filename>',
-        '/web/content/<int:id>-<string:unique>',
-        '/web/content/<int:id>-<string:unique>/<string:filename>',
-        '/web/content/<int:id>-<string:unique>/<path:extra>/<string:filename>',
-        '/web/content/<string:model>/<int:id>/<string:field>',
-        '/web/content/<string:model>/<int:id>/<string:field>/<string:filename>'], type='http', auth="public")
-    def content_common(self, xmlid=None, model='ir.attachment', id=None, field='datas',
-                       filename=None, filename_field='name', unique=None, mimetype=None,
-                       download=None, data=None, token=None, access_token=None, **kw):
+    @http.route(['/web/assets/debug/<string:filename>',
+    '/web/assets/debug/<path:extra>/<string:filename>',
+    '/web/assets/<int:id>/<string:filename>',
+    '/web/assets/<int:id>-<string:unique>/<string:filename>',
+    '/web/assets/<int:id>-<string:unique>/<path:extra>/<string:filename>'], type='http', auth="public")
+    def content_assets(self, id=None, filename=None, unique=None, extra=None, **kw):
 
         # Intercept response
-        response = super(FixBinary,self).content_common(xmlid, model, id, field,
-                       filename, filename_field, unique, mimetype,
-                       download, data, token, access_token, **kw)
+        response = super(FixBinary,self).content_assets(id, filename, unique, extra, **kw)
 
         # Fix google api calls
-        if filename == 'web.assets_frontend.css':
+        if filename == 'web.assets_frontend.min.css':
             response.data = response.data.decode(response.charset).replace("https://fonts.googleapis.com/css", "/css/font/google").encode(response.charset)
 
         return response
