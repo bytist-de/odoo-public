@@ -1,25 +1,10 @@
 # -*- coding: utf-8 -*-
 import requests
-from odoo.addons.web.controllers.main import Binary
+import odoo
+from odoo.addons.website.controllers.main import WebsiteBinary
 from odoo import http
 
-class FixBinary(Binary):
-
-    @http.route(['/web/assets/debug/<string:filename>',
-    '/web/assets/debug/<path:extra>/<string:filename>',
-    '/web/assets/<int:id>/<string:filename>',
-    '/web/assets/<int:id>-<string:unique>/<string:filename>',
-    '/web/assets/<int:id>-<string:unique>/<path:extra>/<string:filename>'], type='http', auth="public")
-    def content_assets(self, id=None, filename=None, unique=None, extra=None, **kw):
-
-        # Intercept response
-        response = super(FixBinary,self).content_assets(id, filename, unique, extra, **kw)
-
-        # Fix google api calls
-        if filename == 'web.assets_frontend.min.css':
-            response.data = response.data.decode(response.charset).replace("https://fonts.googleapis.com/css", "/css/font/google").encode(response.charset)
-
-        return response
+class FixBinary(WebsiteBinary):
 
     @http.route(['/css/font/google'], type='http', auth="public")
     def load_google_font(self, **kw):
