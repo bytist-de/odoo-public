@@ -5,7 +5,7 @@
     'author': "Bytist GmbH",
     'website': "https://bytist.de",
     'category': 'Website',
-    'version': '16.0.1.0.0',
+    'version': '16.0.1.0.1',
     'depends': ['web', 'website'],
     'license': 'OPL-1',
     'support': 'contact@bytist.de',
